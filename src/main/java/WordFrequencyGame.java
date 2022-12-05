@@ -1,5 +1,6 @@
 import java.util.*;
 
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
@@ -23,13 +24,7 @@ public class WordFrequencyGame {
     }
 
     private StringJoiner generateWordCountString(List<Input> inputList) {
-        Map<String, List<Input>> map =getListMap(inputList);
-
-        List<Input> list = new ArrayList<>();
-        for (Map.Entry<String, List<Input>> entry : map.entrySet()){
-            Input input = new Input(entry.getKey(), entry.getValue().size());
-            list.add(input);
-        }
+        List<Input> list = countEachWord(inputList);
 
         inputList = list;
 
@@ -41,6 +36,17 @@ public class WordFrequencyGame {
             joiner.add(string);
         }
         return joiner;
+    }
+
+    private List<Input> countEachWord(List<Input> inputList) {
+        Map<String, List<Input>> map =getListMap(inputList);
+
+        List<Input> list = new ArrayList<>();
+        for (Map.Entry<String, List<Input>> entry : map.entrySet()){
+            Input input = new Input(entry.getKey(), entry.getValue().size());
+            list.add(input);
+        }
+        return list;
     }
 
     private static List<Input> splitInput(String inputString) {
