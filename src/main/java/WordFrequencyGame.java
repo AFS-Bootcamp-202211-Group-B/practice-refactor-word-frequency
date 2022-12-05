@@ -17,6 +17,10 @@ public class WordFrequencyGame {
         Map<String, Long> inputMap = countWordsFrequency(wordsArr);
         Stream<Input> inputStream = convertMapToInputStream(inputMap);
         List<Input> inputListSorted = sortInputList(inputStream);
+        return formatInputListToString(inputListSorted);
+    }
+
+    private String formatInputListToString(List<Input> inputListSorted) {
         return inputListSorted.stream()
                 .map(input -> input.getWord() + " " + input.getWordCount())
                 .collect(Collectors.joining("\n"));
