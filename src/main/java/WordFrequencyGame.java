@@ -1,6 +1,9 @@
 import java.util.*;
 
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static oracle.jrockit.jfr.events.Bits.intValue;
 
 public class WordFrequencyGame {
 
@@ -43,8 +46,11 @@ public class WordFrequencyGame {
     }
 
     private List<Input> countEachWord(List<Input> inputList) {
-        Map<String, List<Input>> map =getListMap(inputList);
-        return map.entrySet().stream().map(entry ->new Input(entry.getKey(), entry.getValue().size())).collect(Collectors.toList());
+        Map<String, Long> map = inputList.stream()
+                .collect( Collectors.groupingBy( Input::getValue, Collectors.counting()));
+
+
+        return map.entrySet().stream().map(entry ->new Input(entry.getKey(), intValue(entry.getValue()))).collect(Collectors.toList());
     }
 
     private static List<Input> splitInput(String inputString) {
@@ -72,6 +78,5 @@ public class WordFrequencyGame {
 
         return map;
     }
-
 
 }
