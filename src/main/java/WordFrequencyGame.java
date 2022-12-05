@@ -5,9 +5,10 @@ import java.util.stream.Collectors;
 public class WordFrequencyGame {
 
     public static final String CALCULATE_ERROR = "Calculate Error";
+    public static final String WORD_SEPARATOR = "\\s+";
 
     public String getResult(String inputStr){
-        String[] inputStringSplit = inputStr.split("\\s+");
+        String[] inputStringSplit = inputStr.split(WORD_SEPARATOR);
         try {
             //split the input string with 1 to n pieces of spaces
             List<Input> wordList = Arrays.asList(inputStringSplit).stream()
