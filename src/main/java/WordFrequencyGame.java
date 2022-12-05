@@ -43,14 +43,11 @@ public class WordFrequencyGame {
     }
 
     private List<Input> countEachWord(List<Input> inputList) {
+        return countEachWordTemp(inputList);
+    }
+    private List<Input> countEachWordTemp(List<Input> inputList){
         Map<String, List<Input>> map =getListMap(inputList);
-
-        List<Input> list = new ArrayList<>();
-        for (Map.Entry<String, List<Input>> entry : map.entrySet()){
-            Input input = new Input(entry.getKey(), entry.getValue().size());
-            list.add(input);
-        }
-        return list;
+        return map.entrySet().stream().map(entry ->new Input(entry.getKey(), entry.getValue().size())).collect(Collectors.toList());
     }
 
     private static List<Input> splitInput(String inputString) {
