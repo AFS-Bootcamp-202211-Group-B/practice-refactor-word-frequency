@@ -6,6 +6,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
+
+    public static final String CALCULATE_ERROR = "Calculate Error";
+
     public String getResult(String inputStr){
         String[] inputStringSplit = inputStr.split("\\s+");
         try {
@@ -17,7 +20,7 @@ public class WordFrequencyGame {
                     .map(word -> String.format("%s %d",word.getValue(),word.getWordCount()))
                     .collect(Collectors.joining("\n"));
         } catch (Exception e) {
-            return "Calculate Error";
+            return CALCULATE_ERROR;
         }
     }
 
