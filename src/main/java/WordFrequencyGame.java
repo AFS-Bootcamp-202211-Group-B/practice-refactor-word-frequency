@@ -8,20 +8,16 @@ import java.util.stream.Collectors;
 public class WordFrequencyGame {
     public String getResult(String inputStr){
         String[] inputStringSplit = inputStr.split("\\s+");
-        if (inputStringSplit.length==1) {
-            return inputStr + " 1";
-        } else {
-            try {
-                //split the input string with 1 to n pieces of spaces
-                List<Input> wordList = Arrays.asList(inputStringSplit).stream()
-                                            .map(value->new Input(value,1))
-                                            .collect(Collectors.toList());
-                return getCountGroupByWord(wordList).stream()
-                        .map(word -> String.format("%s %d",word.getValue(),word.getWordCount()))
-                        .collect(Collectors.joining("\n"));
-            } catch (Exception e) {
-                return "Calculate Error";
-            }
+        try {
+            //split the input string with 1 to n pieces of spaces
+            List<Input> wordList = Arrays.asList(inputStringSplit).stream()
+                    .map(value->new Input(value,1))
+                    .collect(Collectors.toList());
+            return getCountGroupByWord(wordList).stream()
+                    .map(word -> String.format("%s %d",word.getValue(),word.getWordCount()))
+                    .collect(Collectors.joining("\n"));
+        } catch (Exception e) {
+            return "Calculate Error";
         }
     }
 
