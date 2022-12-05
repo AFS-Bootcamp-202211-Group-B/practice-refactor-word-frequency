@@ -27,8 +27,7 @@ public class WordFrequencyGame {
 
     private List<Input> getCountGroupByWord(List<Input> wordList) {
         return wordList.stream()
-                .map(input->input.getValue())
-                .collect(Collectors.groupingBy( Function.identity(), Collectors.counting()))
+                .collect(Collectors.groupingBy(Input::getValue, Collectors.counting()))
                 .entrySet().stream()
                 .map(inputEntry -> new Input(inputEntry.getKey(),inputEntry.getValue().intValue()))
                 .sorted((word1, word2) -> word2.getWordCount() - word1.getWordCount())
