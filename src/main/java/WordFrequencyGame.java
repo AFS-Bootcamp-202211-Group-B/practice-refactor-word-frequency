@@ -10,11 +10,9 @@ import java.time.LocalDateTime;
 public class WordFrequencyGame {
     public String getResult(String inputStr){
 
-
         if (inputStr.split("\\s+").length==1) {
             return inputStr + " 1";
         } else {
-
             try {
                 List<Input> inputList = splitInputString(inputStr);
 
@@ -26,11 +24,10 @@ public class WordFrequencyGame {
                     Input input = new Input(entry.getKey(), entry.getValue().size());
                     list.add(input);
                 }
-                inputList = list;
 
-                inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
+                list.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
-                StringJoiner joiner = getStringJoiner(inputList);
+                StringJoiner joiner = getStringJoiner(list);
                 return joiner.toString();
             }
             catch (Exception e) {
