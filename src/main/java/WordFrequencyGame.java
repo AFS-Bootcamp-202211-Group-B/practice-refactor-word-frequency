@@ -14,31 +14,23 @@ public class WordFrequencyGame {
 
     public String getResult(String inputStr) {
 
+         //split the input string with 1 to n pieces of spaces
+         String[] arr = inputStr.split(SPACES_REGEX);
 
+        Map<String, Long> inputMap = Arrays.stream(arr)
+                .collect(Collectors.groupingBy(String::toString, Collectors.counting()));
 
-            try {
-                 //split the input string with 1 to n pieces of spaces
-                 String[] arr = inputStr.split(SPACES_REGEX);
+        Stream<Input> inputStream = inputMap.entrySet().stream()
+                .map(input -> new Input(input.getKey(), input.getValue().intValue()));
+        List<Input> inputList = inputStream.sorted(Comparator.comparing(Input::getWordCount).reversed()).collect(Collectors.toList());
 
-                Map<String, Long> inputMap = Arrays.stream(arr)
-                        .collect(Collectors.groupingBy(String::toString, Collectors.counting()));
-
-                Stream<Input> inputStream = inputMap.entrySet().stream()
-                        .map(input -> new Input(input.getKey(), input.getValue().intValue()));
-                List<Input> inputList = inputStream.sorted(Comparator.comparing(Input::getWordCount).reversed()).collect(Collectors.toList());
-
-                // wordFreq
-                StringJoiner joiner = new StringJoiner("\n");
-                for (Input w : inputList) {
-                    String s = w.getWord() + " " + w.getWordCount();
-                    joiner.add(s);
-                }
-                return joiner.toString();
-
-            } catch (Exception e) {
-
-                return "Calculate Error";
-            }
+        // wordFreq
+        StringJoiner joiner = new StringJoiner("\n");
+        for (Input w : inputList) {
+            String s = w.getWord() + " " + w.getWordCount();
+            joiner.add(s);
+        }
+        return joiner.toString();
 
     }
 
