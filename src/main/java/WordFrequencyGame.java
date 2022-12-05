@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
 
-    public static final String CALCULATE_ERROR = "Calculate Error";
-    public static final String WORD_SEPARATOR = "\\s+";
+    private static final String CALCULATE_ERROR = "Calculate Error";
+    private static final String WORD_SEPARATOR = "\\s+";
 
     public String getResult(String inputStr){
         String[] inputStringSplit = inputStr.split(WORD_SEPARATOR);
