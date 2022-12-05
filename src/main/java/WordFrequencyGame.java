@@ -19,11 +19,11 @@ public class WordFrequencyGame {
 
         Map<String, Long> inputMap = countWordsFrequency(wordsArr);
         Stream<Input> inputStream = convertMapToInputStream(inputMap);
-        List<Input> inputList = sortInputList(inputStream);
+        List<Input> inputListSorted = sortInputList(inputStream);
 
         // wordFreq
         StringJoiner joiner = new StringJoiner("\n");
-        for (Input w : inputList) {
+        for (Input w : inputListSorted) {
             String s = w.getWord() + " " + w.getWordCount();
             joiner.add(s);
         }
