@@ -3,4 +3,5 @@
 1. run test
 2. find code smell
    //mysterious name: value,count
+   //extract method splitInputString
 3. commit in baby step
