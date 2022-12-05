@@ -17,32 +17,8 @@ public class WordFrequencyGame {
 
             try {
 
-                //split the input string with 1 to n pieces of spaces
-                String[] array = inputString.split("\\s+");
-
-                List<Input> inputList = new ArrayList<>();
-                for (String string : array) {
-                    Input input = new Input(string, 1);
-                    inputList.add(input);
-                }
-
-                //get the map for the next step of sizing the same word
-                Map<String, List<Input>> map =getListMap(inputList);
-
-                List<Input> list = new ArrayList<>();
-                for (Map.Entry<String, List<Input>> entry : map.entrySet()){
-                    Input input = new Input(entry.getKey(), entry.getValue().size());
-                    list.add(input);
-                }
-                inputList = list;
-
-                inputList.sort((firstWord, secondWord) -> secondWord.getWordCount() - firstWord.getWordCount());
-
-                StringJoiner joiner = new StringJoiner("\n");
-                for (Input word : inputList) {
-                    String string = word.getValue() + " " +word.getWordCount();
-                    joiner.add(string);
-                }
+                List<Input> inputList = splitInput(inputString);
+                StringJoiner joiner = generateWordCountString(inputList);
                 return joiner.toString();
             } catch (Exception e) {
 
@@ -50,6 +26,37 @@ public class WordFrequencyGame {
                 return "Calculate Error";
             }
         }
+    }
+
+    private StringJoiner generateWordCountString(List<Input> inputList) {
+        Map<String, List<Input>> map =getListMap(inputList);
+
+        List<Input> list = new ArrayList<>();
+        for (Map.Entry<String, List<Input>> entry : map.entrySet()){
+            Input input = new Input(entry.getKey(), entry.getValue().size());
+            list.add(input);
+        }
+        inputList = list;
+
+        inputList.sort((firstWord, secondWord) -> secondWord.getWordCount() - firstWord.getWordCount());
+
+        StringJoiner joiner = new StringJoiner("\n");
+        for (Input word : inputList) {
+            String string = word.getValue() + " " +word.getWordCount();
+            joiner.add(string);
+        }
+        return joiner;
+    }
+
+    private static List<Input> splitInput(String inputString) {
+        String[] array = inputString.split("\\s+");
+
+        List<Input> inputList = new ArrayList<>();
+        for (String string : array) {
+            Input input = new Input(string, 1);
+            inputList.add(input);
+        }
+        return inputList;
     }
 
 
