@@ -1,7 +1,5 @@
 import java.util.*;
-import java.io.CharArrayWriter;
 
-import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
@@ -46,13 +44,10 @@ public class WordFrequencyGame {
     }
 
     private static List<Input> splitInput(String inputString) {
-        return splitInputTemp(inputString);
-
-    }
-    private static List<Input> splitInputTemp(String inputString) {
         return Arrays.stream(inputString.split("\\s+"))
                 .map(string -> new Input(string,1))
                 .collect(Collectors.toList());
+
     }
 
 
