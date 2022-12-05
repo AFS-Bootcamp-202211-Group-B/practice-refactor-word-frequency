@@ -13,17 +13,12 @@ public class WordFrequencyGame {
         } else {
             try {
                 //split the input string with 1 to n pieces of spaces
-                List<Input> inputList = Arrays.asList(inputStringSplit).stream()
+                List<Input> wordList = Arrays.asList(inputStringSplit).stream()
                                             .map(value->new Input(value,1))
                                             .collect(Collectors.toList());
-
-                //get the map for the next step of sizing the same word
-                inputList = getListMap(inputList);
-
-                return inputList.stream()
+                return getCountGroupByWord(wordList).stream()
                         .map(word -> String.format("%s %d",word.getValue(),word.getWordCount()))
                         .collect(Collectors.joining("\n"));
-
             } catch (Exception e) {
                 return "Calculate Error";
             }
@@ -31,13 +26,13 @@ public class WordFrequencyGame {
     }
 
 
-    private List<Input> getListMap(List<Input> inputList) {
-        return inputList.stream()
+    private List<Input> getCountGroupByWord(List<Input> wordList) {
+        return wordList.stream()
                 .map(input->input.getValue())
                 .collect(Collectors.groupingBy( Function.identity(), Collectors.counting()))
                 .entrySet().stream()
                 .map(inputEntry -> new Input(inputEntry.getKey(),inputEntry.getValue().intValue()))
-                .sorted((w1, w2) -> w2.getWordCount() - w1.getWordCount())
+                .sorted((word1, word2) -> word2.getWordCount() - word1.getWordCount())
                 .collect(Collectors.toList());
     }
 
