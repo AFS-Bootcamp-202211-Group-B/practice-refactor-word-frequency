@@ -15,14 +15,11 @@ public class WordFrequencyGame {
     public String getResult(String inputStr) {
 
          //split the input string with 1 to n pieces of spaces
-         String[] arr = inputStr.split(SPACES_REGEX);
+         String[] wordsArr = inputStr.split(SPACES_REGEX);
 
-        Map<String, Long> inputMap = Arrays.stream(arr)
-                .collect(Collectors.groupingBy(String::toString, Collectors.counting()));
-
-        Stream<Input> inputStream = inputMap.entrySet().stream()
-                .map(input -> new Input(input.getKey(), input.getValue().intValue()));
-        List<Input> inputList = inputStream.sorted(Comparator.comparing(Input::getWordCount).reversed()).collect(Collectors.toList());
+        Map<String, Long> inputMap = countWordsFrequency(wordsArr);
+        Stream<Input> inputStream = convertMapToInputStream(inputMap);
+        List<Input> inputList = sortInputList(inputStream);
 
         // wordFreq
         StringJoiner joiner = new StringJoiner("\n");
@@ -34,6 +31,19 @@ public class WordFrequencyGame {
 
     }
 
+    private List<Input> sortInputList(Stream<Input> inputStream) {
+        return inputStream.sorted(Comparator.comparing(Input::getWordCount).reversed()).collect(Collectors.toList());
+    }
+
+    private Stream<Input> convertMapToInputStream(Map<String, Long> inputMap) {
+        return inputMap.entrySet().stream()
+                .map(input -> new Input(input.getKey(), input.getValue().intValue()));
+    }
+
+    private Map<String, Long> countWordsFrequency(String[] wordsArr) {
+        return Arrays.stream(wordsArr)
+                .collect(Collectors.groupingBy(String::toString, Collectors.counting()));
+    }
 
 
 }
