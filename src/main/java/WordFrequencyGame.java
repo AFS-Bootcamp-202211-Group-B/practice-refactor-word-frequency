@@ -1,53 +1,35 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 import java.io.CharArrayWriter;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
     public String getResult(String inputStr){
-
-
         String[] inputStringSplit = inputStr.split("\\s+");
         if (inputStringSplit.length==1) {
             return inputStr + " 1";
         } else {
-
             try {
-
                 //split the input string with 1 to n pieces of spaces
-                String[] arr = inputStringSplit;
-
-                List<Input> inputList = new ArrayList<>();
-                for (String s : arr) {
-                    Input input = new Input(s, 1);
-                    inputList.add(input);
-                }
+                List<Input> inputList = Arrays.asList(inputStringSplit).stream()
+                                            .map(value->new Input(value,1))
+                                            .collect(Collectors.toList());
 
                 //get the map for the next step of sizing the same word
                 Map<String, List<Input>> map =getListMap(inputList);
 
-                List<Input> list = new ArrayList<>();
-                for (Map.Entry<String, List<Input>> entry : map.entrySet()){
-                    Input input = new Input(entry.getKey(), entry.getValue().size());
-                    list.add(input);
-                }
-                inputList = list;
+                inputList = map.entrySet().stream()
+                                .map(inputEntry -> new Input(inputEntry.getKey(),inputEntry.getValue().size()))
+                                .collect(Collectors.toList());
 
                 inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
-                StringJoiner joiner = new StringJoiner("\n");
-                for (Input w : inputList) {
-                    String s = w.getValue() + " " +w.getWordCount();
-                    joiner.add(s);
-                }
-                return joiner.toString();
+                return inputList.stream()
+                        .map(word -> String.format("%s %d",word.getValue(),word.getWordCount()))
+                        .collect(Collectors.joining("\n"));
+
             } catch (Exception e) {
-
-
                 return "Calculate Error";
             }
         }
