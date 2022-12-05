@@ -13,22 +13,13 @@ public class WordFrequencyGame {
     public static final String SPACES_REGEX = "\\s+";
 
     public String getResult(String inputStr) {
-
-         //split the input string with 1 to n pieces of spaces
-         String[] wordsArr = inputStr.split(SPACES_REGEX);
-
+        String[] wordsArr = inputStr.split(SPACES_REGEX);
         Map<String, Long> inputMap = countWordsFrequency(wordsArr);
         Stream<Input> inputStream = convertMapToInputStream(inputMap);
         List<Input> inputListSorted = sortInputList(inputStream);
-
-        // wordFreq
-        StringJoiner joiner = new StringJoiner("\n");
-        for (Input w : inputListSorted) {
-            String s = w.getWord() + " " + w.getWordCount();
-            joiner.add(s);
-        }
-        return joiner.toString();
-
+        return inputListSorted.stream()
+                .map(input -> input.getWord() + " " + input.getWordCount())
+                .collect(Collectors.joining("\n"));
     }
 
     private List<Input> sortInputList(Stream<Input> inputStream) {
