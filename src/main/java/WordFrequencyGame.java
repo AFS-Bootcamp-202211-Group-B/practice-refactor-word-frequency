@@ -1,6 +1,5 @@
 import java.util.*;
 
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
@@ -38,9 +37,6 @@ public class WordFrequencyGame {
     }
 
     private StringJoiner joinWordCountString(List<Input> inputList) {
-        return joinWordCountStringTemp(inputList);
-    }
-    private StringJoiner joinWordCountStringTemp(List<Input> inputList){
         StringJoiner joiner = new StringJoiner("\n");
         inputList.stream().map(input -> input.getValue() + " " +input.getWordCount()).forEach(input ->joiner.add(input));
         return joiner;
