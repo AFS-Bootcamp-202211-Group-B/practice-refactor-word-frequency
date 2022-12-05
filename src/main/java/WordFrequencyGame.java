@@ -6,17 +6,18 @@ import java.util.stream.Collectors;
 public class WordFrequencyGame {
 
     private static final String CALCULATE_ERROR = "Calculate Error";
-    private static final String WORD_SEPARATOR = "\\s+";
+    private static final String INPUT_WORD_DELIMITER = "\\s+";
+    private static final String OUTPUT_LINE_DELIMITER = "\n";
 
     public String getResult(String inputStr){
-        String[] inputStringSplit = inputStr.split(WORD_SEPARATOR);
+        String[] inputStringSplit = inputStr.split(INPUT_WORD_DELIMITER);
         try {
             //split the input string with 1 to n pieces of spaces
             List<String> wordList = Arrays.asList(inputStringSplit);
             List<Input> wordListCountByWord = getCountGroupByWord(wordList);
             return wordListCountByWord.stream()
                     .map(word -> String.format("%s %d",word.getWord(),word.getWordCount()))
-                    .collect(Collectors.joining("\n"));
+                    .collect(Collectors.joining(OUTPUT_LINE_DELIMITER));
         } catch (Exception e) {
             return CALCULATE_ERROR;
         }
