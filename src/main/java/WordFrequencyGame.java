@@ -4,10 +4,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
+
+    private static final int MIN_WORD_LENGTH = 1;
+
     public String getResult(String inputString){
 
 
-        if (inputString.split("\\s+").length==1) {
+        if (inputString.split("\\s+").length== MIN_WORD_LENGTH) {
             return inputString + " 1";
         } else {
 
