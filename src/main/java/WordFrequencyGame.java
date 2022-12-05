@@ -1,75 +1,49 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class WordFrequencyGame {
     public static final String SPACES_REGEX = "\\s+";
 
-    public String getResult(String inputStr){
+    public String getResult(String inputStr) {
 
-
-        if (inputStr.split(SPACES_REGEX).length==1) {
+        if (inputStr.split(SPACES_REGEX).length == 1) {
             return inputStr + " 1";
         } else {
 
             try {
+                 //split the input string with 1 to n pieces of spaces
+                 String[] arr = inputStr.split(SPACES_REGEX);
 
-                //split the input string with 1 to n pieces of spaces
-                String[] arr = inputStr.split(SPACES_REGEX);
+                Map<String, Long> inputMap = Arrays.stream(arr)
+                        .collect(Collectors.groupingBy(String::toString, Collectors.counting()));
 
-                List<Input> inputList = new ArrayList<>();
-                for (String s : arr) {
-                    Input input = new Input(s, 1);
-                    inputList.add(input);
-                }
+                Stream<Input> inputStream = inputMap.entrySet().stream()
+                        .map(input -> new Input(input.getKey(), input.getValue().intValue()));
+                List<Input> inputList = inputStream.sorted(Comparator.comparing(Input::getWordCount).reversed()).collect(Collectors.toList());
 
-                //get the map for the next step of sizing the same word
-                Map<String, List<Input>> map =getListMap(inputList);
-
-                List<Input> list = new ArrayList<>();
-                for (Map.Entry<String, List<Input>> entry : map.entrySet()){
-                    Input input = new Input(entry.getKey(), entry.getValue().size());
-                    list.add(input);
-                }
-                inputList = list;
-
-                inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
-
+                // wordFreq
                 StringJoiner joiner = new StringJoiner("\n");
                 for (Input w : inputList) {
-                    String s = w.getWord() + " " +w.getWordCount();
+                    String s = w.getWord() + " " + w.getWordCount();
                     joiner.add(s);
                 }
                 return joiner.toString();
-            } catch (Exception e) {
 
+            } catch (Exception e) {
 
                 return "Calculate Error";
             }
         }
     }
 
-
-    private Map<String,List<Input>> getListMap(List<Input> inputList) {
-        Map<String, List<Input>> map = new HashMap<>();
-        for (Input input :  inputList){
-//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-            if (!map.containsKey(input.getWord())){
-                ArrayList arr = new ArrayList<>();
-                arr.add(input);
-                map.put(input.getWord(), arr);
-            }
-
-            else {
-                map.get(input.getWord()).add(input);
-            }
-        }
-
-
-        return map;
-    }
 
 
 }
