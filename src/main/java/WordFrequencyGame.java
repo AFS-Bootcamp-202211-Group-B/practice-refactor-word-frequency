@@ -1,8 +1,5 @@
 import java.util.*;
-import java.io.CharArrayWriter;
 
-import java.time.LocalDateTime;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
@@ -17,7 +14,7 @@ public class WordFrequencyGame {
                     .map(value->new Input(value,1))
                     .collect(Collectors.toList());
             return getCountGroupByWord(wordList).stream()
-                    .map(word -> String.format("%s %d",word.getValue(),word.getWordCount()))
+                    .map(word -> String.format("%s %d",word.getWord(),word.getWordCount()))
                     .collect(Collectors.joining("\n"));
         } catch (Exception e) {
             return CALCULATE_ERROR;
@@ -27,7 +24,7 @@ public class WordFrequencyGame {
 
     private List<Input> getCountGroupByWord(List<Input> wordList) {
         return wordList.stream()
-                .collect(Collectors.groupingBy(Input::getValue, Collectors.counting()))
+                .collect(Collectors.groupingBy(Input::getWord, Collectors.counting()))
                 .entrySet().stream()
                 .map(inputEntry -> new Input(inputEntry.getKey(),inputEntry.getValue().intValue()))
                 .sorted((word1, word2) -> word2.getWordCount() - word1.getWordCount())
