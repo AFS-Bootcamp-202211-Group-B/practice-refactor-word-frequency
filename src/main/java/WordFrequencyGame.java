@@ -17,7 +17,10 @@ public class WordFrequencyGame {
 
             try {
 
+                //split the input string with 1 to n pieces of spaces
                 List<Input> inputList = splitInput(inputString);
+
+                //get the map for the next step of sizing the same word
                 StringJoiner joiner = generateWordCountString(inputList);
                 return joiner.toString();
             } catch (Exception e) {
