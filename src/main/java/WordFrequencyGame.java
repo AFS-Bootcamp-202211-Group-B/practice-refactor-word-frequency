@@ -46,9 +46,9 @@ public class WordFrequencyGame {
     }
 
     private List<Input> countEachWord(List<Input> inputList) {
-        Map<String, Long> map = inputList.stream()
-                .collect( Collectors.groupingBy( Input::getValue, Collectors.counting()));
-        return map.entrySet().stream().map(entry ->new Input(entry.getKey(), intValue(entry.getValue()))).collect(Collectors.toList());
+        Map<String, List<Input>> map = inputList.stream()
+                .collect( Collectors.groupingBy( Input::getValue));
+        return map.entrySet().stream().map(entry ->new Input(entry.getKey(),entry.getValue().size())).collect(Collectors.toList());
     }
 
     private static List<Input> splitInput(String inputString) {
